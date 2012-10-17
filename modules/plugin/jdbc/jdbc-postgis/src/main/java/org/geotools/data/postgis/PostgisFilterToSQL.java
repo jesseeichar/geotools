@@ -17,12 +17,15 @@
 package org.geotools.data.postgis;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.geotools.data.jdbc.FilterToSQL;
 import org.geotools.filter.FilterCapabilities;
+import org.geotools.filter.LikeFilterImpl;
 import org.geotools.jdbc.JDBCDataStore;
+import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.filter.expression.Add;
+import org.opengis.filter.PropertyIsLike;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
 import org.opengis.filter.expression.Literal;
@@ -139,4 +142,70 @@ public class PostgisFilterToSQL extends FilterToSQL {
     public void setFunctionEncodingEnabled(boolean functionEncodingEnabled) {
         this.functionEncodingEnabled = functionEncodingEnabled;
     }
+    
+    @Override
+    public Object visit(PropertyIsLike filter, Object extraData){
+        char esc = filter.getEscape().charAt(0);
+        char multi = filter.getWildCard().charAt(0);
+        char single = filter.getSingleChar().charAt(0);
+        boolean matchCase = filter.isMatchingCase();
+
+        String literal = filter.getLiteral();
+        Expression att = filter.getExpression();
+        if (att.toString().endsWith("_keylist")) {
+            try {
+                String pattern = LikeFilterImpl.convertToSQL92(esc, multi, single, matchCase, literal);
+                out.write(" ( ");
+                out.write(att.toString() + "_vectorise");
+                // Debug tb 28.01.2010
+                out.write(" @@ to_tsquery('english','");
+                // end debug
+                // Debug tb 07.12.2009
+                // out.write(pattern.replaceAll("%", ""));
+                pattern.replaceAll("%", "");
+                if (pattern.startsWith(" ")) {
+                    pattern = pattern.substring(1);
+                }
+                if (pattern.endsWith(" ")) {
+                    pattern = pattern.substring(0, pattern.length() - 1);
+                }
+                out.write(pattern.replaceAll(" ", " & "));
+                // end debug
+                out.write("') ) ");
+            } catch (java.io.IOException ioe) {
+                throw new RuntimeException(IO_ERROR, ioe);
+            }
+        } else {
+            // JD: hack for date values, we append some additional padding to
+            // handle
+            // the matching of time/timezone/etc...
+            AttributeDescriptor ad = (AttributeDescriptor) att.evaluate(featureType);
+            if (ad != null && Date.class.isAssignableFrom(ad.getType().getBinding())) {
+                literal += multi;
+            }
+
+            String pattern = LikeFilterImpl.convertToSQL92(esc, multi, single, matchCase, literal);
+
+            try {
+                if (!matchCase) {
+                    out.write(" UPPER(");
+                }
+
+                att.accept(this, extraData);
+
+                if (!matchCase) {
+                    out.write(") LIKE '");
+                } else {
+                    out.write(" LIKE '");
+                }
+
+                out.write(pattern);
+                out.write("' ");
+            } catch (java.io.IOException ioe) {
+                throw new RuntimeException(IO_ERROR, ioe);
+            }
+        }
+        return extraData;
+    }
+
 }
