@@ -42,6 +42,7 @@
 
   <!-- Modules included in a normal build -->
   <modules>
+    <module>mif</module>
     <module>kml</module>
     <module>ogr</module>
   </modules>
