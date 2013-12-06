@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.geotools</groupId>
     <artifactId>modules</artifactId>
-    <version>9-SNAPSHOT</version>
+    <version>9.5</version>
   </parent>
 
   <!-- =========================================================== -->
@@ -43,28 +43,7 @@
   <!--     Modules included in the build                           -->
   <!-- =========================================================== --> 
   <modules>
-    <module>arcgrid</module>
-    <module>arcsde</module>
-    <module>charts</module>
-    <module>epsg-extension</module>
-    <module>epsg-hsql</module>
-    <module>epsg-postgresql</module>
-    <module>epsg-wkt</module>
-    <module>feature-pregeneralized</module>
     <module>geotiff</module>
-	<module>grassraster</module>
-    <module>gtopo30</module>
-    <module>image</module>
-    <module>imagemosaic</module>
-    <module>imageio-ext-gdal</module>
-    <module>imagepyramid</module>
-    <module>imagemosaic-jdbc</module>
-    <module>jdbc</module>
-    <module>jp2k</module>
-    <module>property</module>
-    <module>referencing3D</module>
-    <module>shapefile</module>
-    <module>svg</module>
   </modules>
 
 </project>

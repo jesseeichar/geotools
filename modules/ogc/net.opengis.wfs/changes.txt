@@ -1,2 +1,0 @@
-* added many='true' to FeaturTypeType#getOtherSRS() and OutputFormatListType#getFormat()
-* added GetFeatureType#getFormatOptions() : Map

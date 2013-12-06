@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.geotools</groupId>
     <artifactId>modules</artifactId>
-    <version>9-SNAPSHOT</version>
+    <version>9.5</version>
   </parent>
   
 
@@ -44,18 +44,7 @@
   <!--     Modules included in the build                           -->
   <!-- =========================================================== -->
   <modules>
-    <module>opengis</module>
-    <module>cql</module>
-    <module>metadata</module>
-    <module>referencing</module>
-    <module>coverage</module>
-    <module>api</module>
     <module>main</module>
-    <module>data</module>
-    <module>sample-data</module>
-    <module>render</module>
-    <module>xml</module>
-    <module>jdbc</module>
   </modules>
 
 

@@ -103,92 +103,13 @@
     <postgresql.jdbc.version>8.4-701.jdbc3</postgresql.jdbc.version>
   </properties>
 
-  <!-- Profiles set on the command-line overwrite default properties. -->
-  <profiles>
-    <profile>
-      <id>docs</id>
-      <activation>
-         <property><name>all</name></property>
-       </activation>
-      <modules>
-        <module>docs</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>extensive.tests</id>
-      <properties>
-        <extensive.tests>true</extensive.tests>
-      </properties>
-    </profile>
-    <profile>
-      <id>image.tests</id>
-      <properties>
-        <image.tests>true</image.tests>
-      </properties>
-    </profile>
-    <profile>
-      <id>interactive.tests</id>
-      <properties>
-        <interactive.tests>true</interactive.tests>
-      </properties>
-    </profile>
-    <profile>
-      <id>interactive.image</id>
-      <properties>
-        <interactive.image>true</interactive.image>
-      </properties>
-    </profile>
-    <profile>
-      <id>site.build</id>
-      <properties>
-        <allow.test.skip>false</allow.test.skip>
-        <allow.test.failure.ignore>true</allow.test.failure.ignore>
-        <extensive.tests>true</extensive.tests>
-      </properties>
-    </profile>
-     <profile>
-      <id>online</id>
-      <properties>
-        <online.skip.pattern>disabled</online.skip.pattern>
-      </properties>
-    </profile>
-    <profile>
-      <id>stress</id>
-      <properties>
-        <stress.skip.pattern>disabled</stress.skip.pattern>
-      </properties>
-    </profile>
-    <profile>
-      <id>deploy.opengeo</id>
-      <distributionManagement>
-        <repository>
-          <id>opengeo</id>
-          <uniqueVersion>false</uniqueVersion>
-          <name>OpenGeo Maven Repository</name>
-          <url>dav:http://repo.opengeo.org</url>
-        </repository>
-      </distributionManagement>
-    </profile>
-    <profile>
-      <id>site.local</id>
-      <distributionManagement>
-        <site>
-          <id>local</id>
-          <name>Web site for Maven reports</name>
-          <url>file:///${java.io.tmpdir}/gtsite</url>
-        </site>
-      </distributionManagement>
-    </profile>
-  </profiles>
-
-
   <!-- =========================================================== -->
   <!--     Project Description                                     -->
   <!-- =========================================================== -->
   <groupId>org.geotools</groupId>
   <artifactId>geotools</artifactId>
   <packaging>pom</packaging>
-  <version>9-SNAPSHOT</version>
+  <version>9.5</version>
   <name>Geotools</name>
 
   <scm>
@@ -1475,7 +1396,6 @@
   <!--     Modules for the build in approximate dependency order   -->
   <!-- =========================================================== -->
   <modules>
-    <module>build</module>
     <module>modules</module>
   </modules>
 </project>
